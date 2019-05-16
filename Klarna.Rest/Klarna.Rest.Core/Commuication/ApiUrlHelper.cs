@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace Klarna.Rest.Core.Commuication
@@ -6,7 +7,7 @@ namespace Klarna.Rest.Core.Commuication
     internal static class ApiUrlHelper
     {
         public static string GetApiUrlForController(string baseApiUrl, string controller, string append = null,
-            NameValueCollection parameters = null)
+	        IDictionary<string, object> parameters = null)
         {
             var controllerUri = $"{baseApiUrl.TrimEnd('/')}/{controller.TrimStart('/')}{(!string.IsNullOrEmpty(append) ? $"/{append}" : string.Empty)}";
 
@@ -16,10 +17,10 @@ namespace Klarna.Rest.Core.Commuication
             return $"{controllerUri}{(controllerUri.IndexOf('?') > -1 ? "&" : "?")}{parameters.ToQueryString()}";
         }
 
-        private static string ToQueryString(this NameValueCollection nvc)
+        private static string ToQueryString(this IDictionary<string, object> nvc)
         {
             return string.Join("&",
-                nvc.AllKeys.Distinct().Select(a => a + "=" + nvc[a]));
+                nvc.Keys.Select(a => a + "=" + nvc[a]));
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Klarna.Rest.Core.Commuication
     /// <summary>
     /// Error message model.
     /// </summary>
-    public class ApiException : WebException
+    public class ApiException : Exception
     {
         /// <summary>
         /// Gets the API response status code.

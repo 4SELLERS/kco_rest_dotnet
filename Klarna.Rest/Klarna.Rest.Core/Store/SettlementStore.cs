@@ -29,7 +29,7 @@ namespace Klarna.Rest.Core.Store
         /// <returns>Collection of <see cref="SettlementsPayoutSummary"/></returns>
         public async Task<ICollection<SettlementsPayoutSummary>> GetPayoutsSummary(string startDate, string endDate, string currencyCode)
         {
-            var nvm = new NameValueCollection
+            var nvm = new Dictionary<string, object>
             {
                 {"start_date", startDate},
                 {"end_date", endDate},
@@ -68,7 +68,7 @@ namespace Klarna.Rest.Core.Store
         public async Task<SettlementsGetAllPayoutsResponse> GetAllPayouts(string startDate = "", string endDate = "", string currencyCode = "",
             int size = 0, int offset = 0)
         {
-            var nvm = new NameValueCollection();
+            var nvm = new Dictionary<string, object>();
             if (!string.IsNullOrEmpty(startDate))
             {
                 nvm.Add("start_date", startDate);
@@ -112,7 +112,7 @@ namespace Klarna.Rest.Core.Store
         public async Task<SettlementsGetTransactionsResponse> GetTransactions(string paymentReference = "", string orderId = "",
             int size = 0, int offset = 0)
         {
-            var nvm = new NameValueCollection();
+            var nvm = new Dictionary<string, object>();
             if (!string.IsNullOrEmpty(paymentReference))
             {
                 nvm.Add("payment_reference", paymentReference);
@@ -149,7 +149,7 @@ namespace Klarna.Rest.Core.Store
         /// <returns>A <see cref="Stream"/> of content type text/csv</returns>
         public async Task<Stream> GetCsvPayoutReport(string paymentReference)
         {
-            var nvm = new NameValueCollection{{"payment_reference", paymentReference}};
+            var nvm = new Dictionary<string, object>{{"payment_reference", paymentReference}};
 
             var url = ApiUrlHelper.GetApiUrlForController(ApiSession.ApiUrl, ApiControllers.SettlementReports, "payout-with-transactions", nvm);
 
@@ -166,7 +166,7 @@ namespace Klarna.Rest.Core.Store
         /// <returns>A <see cref="Stream"/> of content type text/csv</returns>
         public async Task<Stream> GetCsvSummary(string startDate, string endDate)
         {
-            var nvm = new NameValueCollection
+            var nvm = new Dictionary<string, object>
             {
                 { "start_date", startDate },
                 { "end_date", endDate }
@@ -184,7 +184,7 @@ namespace Klarna.Rest.Core.Store
         /// <returns>A <see cref="Stream"/> of content type application/pdf</returns>
         public async Task<Stream> GetPdfPayoutSummary(string paymentReference)
         {
-            var nvm = new NameValueCollection { { "payment_reference", paymentReference } };
+            var nvm = new Dictionary<string, object> { { "payment_reference", paymentReference } };
 
             var url = ApiUrlHelper.GetApiUrlForController(ApiSession.ApiUrl, ApiControllers.SettlementReports, "payout", nvm);
 
@@ -199,7 +199,7 @@ namespace Klarna.Rest.Core.Store
         /// <returns>A <see cref="Stream"/> of content type application/pdf</returns>
         public async Task<Stream> GetPdfSummary(string startDate, string endDate)
         {
-            var nvm = new NameValueCollection
+            var nvm = new Dictionary<string, object>
             {
                 { "start_date", startDate },
                 { "end_date", endDate }
